@@ -1,0 +1,23 @@
+{
+  "name": "workerthread2",
+  "version": "1.0.0",
+  "description": "An example of Node worker threads, using bidirectional message",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeffML/workerthread2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeffML/workerthread2/issues"
+  },
+  "homepage": "https://github.com/JeffML/workerthread2#readme",
+  "devDependencies": {
+    "eslint": "^5.15.1"
+  }
+}
