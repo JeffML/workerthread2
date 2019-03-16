@@ -1,20 +1,22 @@
-const { Worker } = require('worker_threads');
+const { Worker, isMainThread } = require("worker_threads");
 
 function runService(workerData) {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker('./service.js', { workerData });
-    worker.on('message', resolve);
-    worker.on('error', reject);
-    worker.on('exit', (code) => {
-      if (code !== 0)
-        reject(new Error(`Worker stopped with exit code ${code}`));
-    })
-  })
+  const worker = new Worker("./service.js", { workerData });
+  worker.postMessage("once");
+  worker.on("message", incoming => console.log({ incoming }));
+  worker.on("error", code => new Error(`Worker error with exit code ${code}`));
+  worker.on("exit", code =>
+    console.log(`Worker stopped with exit code ${code}`)
+  );
+  worker.postMessage("twice");
+  worker.postMessage("three times");
+  worker.postMessage("exit");
+  setTimeout(() => worker.postMessage("you won't see me"), 100);
 }
 
 async function run() {
-  const result = await runService('world')
-  console.log(result);
+  const result = runService("let's begin");
+  console.log({ isMainThread });
 }
 
-run().catch(err => console.error(err))
+run().catch(err => console.error(err));
